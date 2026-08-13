@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HESH AI — استوديو إعلانات بالذكاء الاصطناعي</title>
+<style>
+  :root{
+    --bg-void:#0B0B0D;
+    --bg-panel:#17171A;
+    --bg-panel-2:#1F1F23;
+    --orange:#FF5A36;
+    --cyan:#22D3D8;
+    --text:#F2F1ED;
+    --text-dim:#8E8E93;
+    --hairline:rgba(242,241,237,0.1);
+    --bar-h: 5.5vh;
+  }
+  @media (max-width:640px){ :root{ --bar-h: 34px; } }
+
+  *{ margin:0; padding:0; box-sizing:border-box; }
+
+  html{ scroll-behavior:smooth; }
+
+  body{
+    background:var(--bg-void);
+    color:var(--text);
+    font-family:-apple-system, "SF Arabic", "Segoe UI", Tahoma, Arial, sans-serif;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+
+  .mono{ font-family:"SF Mono", "Menlo", "Consolas", monospace; direction:ltr; unicode-bidi:isolate; }
+
+  /* ---- Letterbox frame ---- */
+  .letterbox{
+    position:fixed;
+    left:0; right:0;
+    height:var(--bar-h);
+    background:#000;
+    z-index:100;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 20px;
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:var(--text-dim);
+    direction:ltr;
+  }
+  .letterbox.top{ top:0; border-bottom:1px solid var(--hairline); }
+  .letterbox.bottom{ bottom:0; border-top:1px solid var(--hairline); }
+  .letterbox .rec{ display:flex; align-items:center; gap:6px; color:var(--text-dim); }
+  .rec-dot{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--orange);
+    animation:pulse 1.6s ease-in-out infinite;
+  }
+  @keyframes pulse{ 0%,100%{opacity:1;} 50%{opacity:0.25;} }
+  .letterbox .aspect{ color:var(--text-dim); }
+
+  main{
+    margin-top:var(--bar-h);
+    margin-bottom:var(--bar-h);
+    min-height:calc(100vh - (var(--bar-h) * 2));
+  }
+
+  section{
+    padding: 90px 8vw;
+    border-bottom:1px solid var(--hairline);
+  }
+  @media (max-width:640px){ section{ padding:60px 6vw; } }
+
+  /* ---- Hero ---- */
+  .hero{
+    min-height:calc(100vh - (var(--bar-h) * 2));
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    position:relative;
+    border-bottom:1px solid var(--hairline);
+  }
+  .eyebrow{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:12px;
+    letter-spacing:0.15em;
+    color:var(--cyan);
+    text-transform:uppercase;
+    margin-bottom:22px;
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    width:28px; height:1px;
+    background:var(--cyan);
+  }
+  .logo-mark{
+    font-size:15px;
+    color:var(--text-dim);
+    margin-bottom:8px;
+    letter-spacing:0.02em;
+  }
+  h1{
+    font-weight:900;
+    font-size:clamp(2.6rem, 6.5vw, 5.4rem);
+    line-height:1.12;
+    letter-spacing:-0.01em;
+    max-width:16ch;
+  }
+  h1 .accent{
+    background:linear-gradient(90deg, var(--cyan), var(--orange));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+  .hero-sub{
+    margin-top:28px;
+    font-size:clamp(1rem, 1.6vw, 1.25rem);
+    color:var(--text-dim);
+    max-width:46ch;
+    font-weight:400;
+  }
+  .hero-cta{
+    margin-top:44px;
+    display:flex;
+    gap:16px;
+    flex-wrap:wrap;
+    align-items:center;
+  }
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--orange);
+    color:#0B0B0D;
+    font-weight:700;
+    font-size:1rem;
+    padding:16px 30px;
+    border-radius:2px;
+    text-decoration:none;
+    transition:transform .15s ease, background .15s ease;
+    border:none;
+    cursor:pointer;
+  }
+  .btn:hover{ background:#ff7050; transform:translateY(-2px); }
+  .btn:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+  .btn-ghost{
+    color:var(--text);
+    border:1px solid var(--hairline);
+    background:transparent;
+    padding:16px 30px;
+    border-radius:2px;
+    text-decoration:none;
+    font-weight:500;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  .btn-ghost:hover{ border-color:var(--cyan); color:var(--cyan); }
+  .btn-ghost:focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+
+  .hero-frame-note{
+    position:absolute;
+    bottom:36px;
+    left:0;
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:11px;
+    color:var(--text-dim);
+    letter-spacing:0.08em;
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  @media (max-width:640px){ .hero-frame-note{ display:none; } }
+
+  /* ---- Section headers ---- */
+  .slate{
+    display:flex;
+    align-items:baseline;
+    gap:16px;
+    margin-bottom:50px;
+  }
+  .slate-num{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:13px;
+    color:var(--orange);
+    border:1px solid var(--orange);
+    padding:3px 9px;
+    letter-spacing:0.05em;
+  }
+  .slate-title{
+    font-weight:900;
+    font-size:clamp(1.5rem, 3vw, 2.1rem);
+  }
+  .slate-line{
+    flex:1;
+    height:1px;
+    background:var(--hairline);
+  }
+
+  /* ---- About ---- */
+  .about-grid{
+    display:grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap:60px;
+  }
+  @media (max-width:800px){ .about-grid{ grid-template-columns:1fr; gap:30px; } }
+  .about-text p{
+    font-size:1.08rem;
+    color:#D6D5D0;
+    max-width:52ch;
+    margin-bottom:18px;
+  }
+  .about-stats{
+    display:flex;
+    flex-direction:column;
+    gap:22px;
+  }
+  .stat{
+    border-right:2px solid var(--cyan);
+    padding-right:16px;
+  }
+  .stat-num{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:2.2rem;
+    font-weight:700;
+    color:var(--text);
+  }
+  .stat-label{
+    color:var(--text-dim);
+    font-size:0.92rem;
+  }
+
+  /* ---- Process (real sequence -> justified numbering) ---- */
+  .process-list{
+    display:flex;
+    flex-direction:column;
+  }
+  .process-item{
+    display:grid;
+    grid-template-columns: 90px 1fr 200px;
+    gap:24px;
+    padding:28px 0;
+    border-top:1px solid var(--hairline);
+    align-items:start;
+  }
+  .process-item:last-child{ border-bottom:1px solid var(--hairline); }
+  @media (max-width:800px){
+    .process-item{ grid-template-columns:60px 1fr; }
+    .process-item .process-tc{ display:none; }
+  }
+  .process-scene{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    color:var(--orange);
+    font-size:0.85rem;
+    padding-top:4px;
+  }
+  .process-body h3{
+    font-size:1.25rem;
+    font-weight:700;
+    margin-bottom:8px;
+  }
+  .process-body p{
+    color:var(--text-dim);
+    max-width:56ch;
+    font-size:0.98rem;
+  }
+  .process-tc{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    color:var(--text-dim);
+    font-size:0.85rem;
+    text-align:left;
+    padding-top:4px;
+  }
+
+  /* ---- Services ---- */
+  .services-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:1px;
+    background:var(--hairline);
+    border:1px solid var(--hairline);
+  }
+  @media (max-width:700px){ .services-grid{ grid-template-columns:1fr; } }
+  .service-card{
+    background:var(--bg-void);
+    padding:34px;
+    transition:background .2s ease;
+  }
+  .service-card:hover{ background:var(--bg-panel); }
+  .service-card .tag{
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:11px;
+    color:var(--cyan);
+    letter-spacing:0.08em;
+    margin-bottom:14px;
+    display:block;
+  }
+  .service-card h3{
+    font-size:1.2rem;
+    font-weight:700;
+    margin-bottom:10px;
+  }
+  .service-card p{
+    color:var(--text-dim);
+    font-size:0.95rem;
+  }
+
+  /* ---- Work / slate card ---- */
+  .work-card{
+    background:var(--bg-panel);
+    border:1px solid var(--hairline);
+    padding:40px;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:40px;
+  }
+  @media (max-width:800px){ .work-card{ grid-template-columns:1fr; gap:24px; } }
+  .work-slate-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:11px;
+    color:var(--text-dim);
+    border-bottom:1px solid var(--hairline);
+    padding-bottom:16px;
+    margin-bottom:24px;
+    grid-column:1 / -1;
+  }
+  .work-slate-top span.client{ color:var(--orange); font-weight:700; }
+  .work-card h3{
+    font-size:1.6rem;
+    font-weight:900;
+    margin-bottom:14px;
+  }
+  .work-card p{ color:var(--text-dim); margin-bottom:10px; }
+  .work-meta{
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:0.85rem;
+  }
+  .work-meta .row{
+    display:flex;
+    justify-content:space-between;
+    border-bottom:1px dashed var(--hairline);
+    padding-bottom:10px;
+    color:var(--text-dim);
+  }
+  .work-meta .row b{ color:var(--text); font-weight:500; }
+
+  /* ---- Contact ---- */
+  .contact{
+    text-align:center;
+    padding-top:110px;
+    padding-bottom:110px;
+  }
+  .contact .eyebrow{ justify-content:center; }
+  .contact .eyebrow::before{ display:none; }
+  .contact h2{
+    font-size:clamp(2rem, 5vw, 3.4rem);
+    font-weight:900;
+    max-width:18ch;
+    margin:0 auto 26px;
+    line-height:1.2;
+  }
+  .contact p{
+    color:var(--text-dim);
+    max-width:44ch;
+    margin:0 auto 40px;
+  }
+  .contact-actions{
+    display:flex;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  .contact-note{
+    margin-top:28px;
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:12px;
+    color:var(--text-dim);
+  }
+
+  footer{
+    text-align:center;
+    padding:30px 8vw;
+    color:var(--text-dim);
+    font-family:"SF Mono", "Menlo", "Consolas", monospace;
+    direction:ltr;
+    font-size:11px;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{ animation:none !important; transition:none !important; scroll-behavior:auto !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="letterbox top">
+  <div class="rec"><span class="rec-dot"></span> REC</div>
+  <div class="aspect">HESH AI — AD FILM UNIT</div>
+  <div class="tc" id="tc">00:00:00:00</div>
+</div>
+
+<main>
+
+  <section class="hero">
+    <div class="logo-mark">HESH AI 🎬</div>
+    <div class="eyebrow">AI ADVERTISING STUDIO</div>
+    <h1>نحوّل الأفكار والمنتجات<br>إلى <span class="accent">إعلانات سينمائية</span><br>بالذكاء الاصطناعي</h1>
+    <p class="hero-sub">من الفكرة إلى الفيديو الجاهز للنشر — إعلانات منتجات بجودة إنتاج سينمائي، مبنية بالكامل على أدوات الذكاء الاصطناعي.</p>
+    <div class="hero-cta">
+      <a href="#contact" class="btn">راسلني عالخاص للطلب →</a>
+      <a href="#work" class="btn-ghost">شوف شغلي</a>
+    </div>
+    <div class="hero-frame-note">SCENE 01 / 03 · ASPECT 9:16 · AI-GENERATED</div>
+  </section>
+
+  <section id="about">
+    <div class="slate">
+      <span class="slate-num">01</span>
+      <span class="slate-title">مين هيك</span>
+      <span class="slate-line"></span>
+    </div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>بشتغل على إنتاج إعلانات فيديو للمنتجات بالكامل بأدوات الذكاء الاصطناعي — من كتابة الفكرة والبرومبت، لحد التوليد والمونتاج والتسليم النهائي.</p>
+        <p>هدفي إني أعطي أي براند إعلان بمستوى إنتاج سينمائي، بدون تصوير حقيقي، وبوقت وتكلفة أقل بكتير من الطرق التقليدية.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat">
+          <div class="stat-num mono">9:16</div>
+          <div class="stat-label">فورمات جاهز لسوشيال ميديا</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num mono">30s</div>
+          <div class="stat-label">مدة تسليم قياسية للإعلان</div>
+        </div>
+        <div class="stat">
+          <div class="stat-num mono">100%</div>
+          <div class="stat-label">إنتاج بالذكاء الاصطناعي</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="process">
+    <div class="slate">
+      <span class="slate-num">02</span>
+      <span class="slate-title">كيف بشتغل</span>
+      <span class="slate-line"></span>
+    </div>
+    <div class="process-list">
+      <div class="process-item">
+        <div class="process-scene">SC.01</div>
+        <div class="process-body">
+          <h3>الفكرة والبرومبت</h3>
+          <p>بنحدد سوا فكرة الإعلان، ونبني البرومبت السينمائي بكل تفاصيله: المدة، الفورمات، وتسلسل المشاهد.</p>
+        </div>
+        <div class="process-tc">00:00 → 00:05</div>
+      </div>
+      <div class="process-item">
+        <div class="process-scene">SC.02</div>
+        <div class="process-body">
+          <h3>التوليد والتصحيح</h3>
+          <p>توليد المشاهد بأدوات AI متعددة، مع تصحيح وتحسين كل مشكلة بصرية لحد ما نوصل للنتيجة الصح.</p>
+        </div>
+        <div class="process-tc">00:05 → 00:20</div>
+      </div>
+      <div class="process-item">
+        <div class="process-scene">SC.03</div>
+        <div class="process-body">
+          <h3>المونتاج والتسليم</h3>
+          <p>تجميع المشاهد، ضبط الإيقاع والصوت، وتسليم الإعلان جاهز للنشر على السوشيال ميديا.</p>
+        </div>
+        <div class="process-tc">00:20 → 00:30</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="slate">
+      <span class="slate-num">03</span>
+      <span class="slate-title">شو بقدم</span>
+      <span class="slate-line"></span>
+    </div>
+    <div class="services-grid">
+      <div class="service-card">
+        <span class="tag">// PRODUCT FILM</span>
+        <h3>إعلانات منتجات</h3>
+        <p>إعلان سينمائي كامل للمنتج، من اللقطة الأولى لحد شعار البراند، بجودة إنتاج احترافية.</p>
+      </div>
+      <div class="service-card">
+        <span class="tag">// CONCEPT AD</span>
+        <h3>أفكار إعلانية إبداعية</h3>
+        <p>مفاهيم إعلانية غير تقليدية للبراندات — سيناريوهات بصرية تشد الانتباه من أول ثانية.</p>
+      </div>
+      <div class="service-card">
+        <span class="tag">// FPV / DRONE</span>
+        <h3>لقطات FPV سينمائية</h3>
+        <p>حركات كاميرا FPV ديناميكية للمنتجات والأماكن، بأسلوب سينمائي متقن.</p>
+      </div>
+      <div class="service-card">
+        <span class="tag">// SOCIAL CUT</span>
+        <h3>نسخ سوشيال ميديا</h3>
+        <p>إعادة تجهيز الإعلان بفورمات 9:16 جاهزة لـ Instagram و TikTok.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="work">
+    <div class="slate">
+      <span class="slate-num">04</span>
+      <span class="slate-title">من شغلي</span>
+      <span class="slate-line"></span>
+    </div>
+    <div class="work-card">
+      <div class="work-slate-top">
+        <span>PROD: <span class="client">TEKA — KITCHEN EQUIPMENT</span></span>
+        <span>AI COMMERCIAL FILM</span>
+      </div>
+      <div>
+        <h3>إعلان فرن TEKA</h3>
+        <p>إعلان تجاري كامل بمدة 30 ثانية، مبني من مشهد افتتاحي بالشعار ومشهدين رئيسيين يبرزوا المنتج بأسلوب سينمائي.</p>
+        <p>تضمّن المشروع حلول إنتاجية مخصصة: تحسين وضوح الشعار، تعديل الصور المرجعية، ومحاكاة حركة إغلاق الباب بدقة.</p>
+      </div>
+      <div class="work-meta">
+        <div class="row"><span>DURATION</span><b>30s</b></div>
+        <div class="row"><span>STRUCTURE</span><b>5s logo + 2×15s scenes</b></div>
+        <div class="row"><span>FORMAT</span><b>9:16</b></div>
+        <div class="row"><span>DELIVERY</span><b>AI-generated, full production</b></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="eyebrow">LET'S SHOOT</div>
+    <h2>عندك منتج بدك تعمله إعلان يستاهله؟</h2>
+    <p>ابعتلي تفاصيل منتجك وشوف كيف ممكن نحوّله لإعلان سينمائي بالذكاء الاصطناعي.</p>
+    <div class="contact-actions">
+      <a href="https://instagram.com/hesh.aii" class="btn">راسلني على إنستغرام →</a>
+    </div>
+  </section>
+
+</main>
+
+<div class="letterbox bottom">
+  <div>HESH AI © 2026</div>
+  <div class="aspect">CUT. PRINT. DELIVER.</div>
+  <div>ASPECT 2.39:1</div>
+</div>
+
+<script>
+  const tc = document.getElementById('tc');
+  let frame = 0;
+  function pad(n){ return n.toString().padStart(2,'0'); }
+  setInterval(() => {
+    frame++;
+    const totalSeconds = Math.floor(frame / 24);
+    const f = frame % 24;
+    const h = Math.floor(totalSeconds / 3600);
+    const m = Math.floor((totalSeconds % 3600) / 60);
+    const s = totalSeconds % 60;
+    tc.textContent = `${pad(h)}:${pad(m)}:${pad(s)}:${pad(f)}`;
+  }, 1000/24);
+</script>
+
+</body>
+</html>

@@ -81,6 +81,12 @@
     position:relative;
     border-bottom:1px solid var(--hairline);
   }
+  .brand-logo-img{
+    width:auto;
+    height:clamp(64px, 9vw, 96px);
+    margin-bottom:22px;
+    display:block;
+  }
   .eyebrow{
     font-family:"SF Mono", "Menlo", "Consolas", monospace;
     direction:ltr;
@@ -323,6 +329,7 @@
     grid-template-columns: 1fr 1fr;
     gap:40px;
   }
+  .work-card + .work-card{ margin-top:24px; }
   @media (max-width:800px){ .work-card{ grid-template-columns:1fr; gap:24px; } }
   .work-slate-top{
     display:flex;
@@ -420,14 +427,13 @@
 <main>
 
   <section class="hero">
-    <div class="logo-mark">HESH AI 🎬</div>
+    <img src="assets/hesh-ai-logo.png" alt="HESH AI — AI Advertising Studio" class="brand-logo-img">
     <div class="eyebrow">AI ADVERTISING STUDIO</div>
     <h1>نحوّل الأفكار والمنتجات<br>إلى <span class="accent">إعلانات سينمائية</span><br>بالذكاء الاصطناعي</h1>
     <p class="hero-sub">من الفكرة إلى الفيديو الجاهز للنشر — إعلانات منتجات بجودة إنتاج سينمائي، مبنية بالكامل على أدوات الذكاء الاصطناعي.</p>
     <div class="hero-cta">
       <a href="#contact" class="btn">راسلني عالخاص للطلب →</a>
       <a href="#work" class="btn-ghost">شوف شغلي</a>
-      <a href="Hashem-Ghannam-CV.pdf" class="btn" target="_blank" rel="noopener">سيرتي الذاتية 📄</a>
     </div>
     <div class="hero-frame-note">SCENE 01 / 03 · ASPECT 9:16 · AI-GENERATED</div>
   </section>
@@ -449,8 +455,8 @@
           <div class="stat-label">فورمات جاهز لسوشيال ميديا</div>
         </div>
         <div class="stat">
-          <div class="stat-num mono">15-30s</div>
-          <div class="stat-label">مدة الإعلان القياسية</div>
+          <div class="stat-num mono">30s</div>
+          <div class="stat-label">مدة تسليم قياسية للإعلان</div>
         </div>
         <div class="stat">
           <div class="stat-num mono">100%</div>
@@ -530,7 +536,7 @@
       <span class="slate-title">من شغلي</span>
       <span class="slate-line"></span>
     </div>
-    <p style="color:var(--text-dim); font-size:1.05rem; max-width:52ch; margin-top:-30px; margin-bottom:44px;">تحويل أي صورة منتج إلى مشهد سينمائي يعرض رحلته من المواد الخام إلى رف الشراء.</p>
+
     <div class="work-card">
       <div class="work-slate-top">
         <span>PROD: <span class="client">TEKA — KITCHEN EQUIPMENT</span></span>
@@ -549,41 +555,24 @@
       </div>
     </div>
 
-    <div class="work-card" style="margin-top:24px;">
+    <div class="work-card">
       <div class="work-slate-top">
-        <span>PROD: <span class="client">بن ازحيمان — قهوة</span></span>
+        <span>PROD: <span class="client">Pure Orange — عصير</span></span>
         <span>AI COMMERCIAL FILM</span>
       </div>
       <div>
-        <h3>إعلان قهوة بن ازحيمان</h3>
-        <p>تحويل صورة منتج ثابتة وعادية إلى فيديو إعلاني سينمائي يحكي رحلة القهوة الكاملة — من حبة القهوة الخام، مروراً بالطحن، وصولاً لفنجان القهوة النهائي.</p>
-        <p>التحدي الأساسي كان بناء تسلسل بصري مقنع من مادة مصدر واحدة (صورة فقط)، بدون أي تصوير حقيقي إضافي.</p>
+        <h3>إعلان عصير Pure Orange</h3>
+        <p>إعلان سينمائي بأسلوب image-to-video، اعتمدنا فيه صورة القنينة الأصلية كمرجع أساسي لكل مشهد لتفادي أي تشويه بالشعار أو النص على العبوة.</p>
+        <p>تم بناء الإعلان من 3 مشاهد متتالية، مع صوت عربي فلسطيني مسجّل خصيصاً للمشروع.</p>
       </div>
       <div class="work-meta">
-        <div class="row"><span>DURATION</span><b>15s</b></div>
-        <div class="row"><span>SOURCE</span><b>Single product photo</b></div>
+        <div class="row"><span>DURATION</span><b>15s (3×5s scenes)</b></div>
+        <div class="row"><span>SOURCE</span><b>Reference product image</b></div>
         <div class="row"><span>FORMAT</span><b>9:16</b></div>
         <div class="row"><span>DELIVERY</span><b>AI-generated, full production</b></div>
       </div>
     </div>
 
-    <div class="work-card" style="margin-top:24px;">
-      <div class="work-slate-top">
-        <span>PROD: <span class="client">Lay's — شيبس</span></span>
-        <span>AI COMMERCIAL FILM</span>
-      </div>
-      <div>
-        <h3>إعلان شيبس ليز</h3>
-        <p>إعلان بصري راقي ومستقبلي يحكي رحلة المنتج من جذور البطاطا الطازجة تحت التربة، وصولاً لشيبس ليز المقرمش الجاهز.</p>
-        <p>اعتمد المشروع على أسلوب بصري سينمائي حديث يبرز جودة المنتج وطبيعته الأصلية، مع الحفاظ على هوية البراند المعروفة عالمياً.</p>
-      </div>
-      <div class="work-meta">
-        <div class="row"><span>DURATION</span><b>15s</b></div>
-        <div class="row"><span>STYLE</span><b>Futuristic, cinematic</b></div>
-        <div class="row"><span>FORMAT</span><b>9:16</b></div>
-        <div class="row"><span>DELIVERY</span><b>AI-generated, full production</b></div>
-      </div>
-    </div>
   </section>
 
   <section id="contact" class="contact">
